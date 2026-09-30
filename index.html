@@ -1,13 +1,26 @@
 <!doctype html>
+<!--
+  velastyle.app home page (relaunch, October 2026): "Vela: AI Color Analysis".
+  Color analysis first (season, palette, draping on your own face, face shape),
+  skin tracking as the ongoing layer, men's grooming as a second line, honest
+  measurement (478 facial points; only changes above normal photo variation
+  count as progress), Free vs Vela Pro pricing, App Store download.
+  No wardrobe, outfit or catalogue features, no medical or diagnostic claims.
+  Marketing copy uses US spelling ("color") to match the App Store name.
+  Self-contained: one CSS block, no scripts, fonts from Google Fonts only.
+  Prices and legal facts must match lib/legalInfo.ts and landing/terms.html.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vela — Beauty, clarified</title>
-<meta name="description" content="Your AI beauty & style OS. Skin scans, colour-season styling, and personalised routines — on one elegant app." />
-<meta property="og:title" content="Vela — Beauty, clarified" />
-<meta property="og:description" content="AI skin analysis, colour-season styling, and a personal beauty routine that learns with you." />
+<title>Vela: AI Color Analysis for iPhone</title>
+<meta name="description" content="Find your color season from one selfie. See your palette draped around your own face, learn your face shape, and track how your skin looks over time with Vela for iPhone." />
+<meta name="apple-itunes-app" content="app-id=6762179147" />
+<meta property="og:title" content="Vela: AI Color Analysis" />
+<meta property="og:description" content="One selfie. Your color season out of 12, your palette on your own face, your face shape, and honest skin tracking." />
 <meta property="og:image" content="/og.png" />
+<meta property="og:type" content="website" />
 <link rel="icon" href="/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,10 +36,11 @@
     --onBg: #1B1C1B;
     --onBgVariant: #504444;
     --outline: #D4C2C2;
-    --muted: rgba(27,28,27,0.45);
+    --muted: rgba(27,28,27,0.55);
   }
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--onBg); }
+  html { scroll-behavior: smooth; }
   body {
     font-family: 'Manrope', system-ui, -apple-system, sans-serif;
     font-weight: 300;
@@ -45,12 +59,13 @@
   /* ─── Layout ─────────────────────────── */
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   section { padding: 96px 0; }
+  @media (max-width: 640px) { section { padding: 72px 0; } }
 
   /* ─── Nav ────────────────────────────── */
   nav {
     position: sticky; top: 0; z-index: 100;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    background: rgba(251,250,247,0.75);
+    background: rgba(251,250,247,0.8);
     border-bottom: 1px solid var(--outline);
   }
   .nav-inner {
@@ -61,7 +76,7 @@
   .nav-links { display: flex; gap: 32px; align-items: center; font-size: 14px; font-weight: 500; }
   .nav-links a { color: var(--onBgVariant); }
   .nav-cta {
-    background: var(--primary); color: white; padding: 10px 20px; border-radius: 100px;
+    background: var(--onBg); color: white !important; padding: 10px 20px; border-radius: 100px;
     font-weight: 600; font-size: 13px; letter-spacing: 0.3px;
     transition: transform 0.15s ease;
   }
@@ -70,7 +85,7 @@
 
   /* ─── Hero ───────────────────────────── */
   .hero {
-    padding: 80px 0 40px;
+    padding: 80px 0 64px;
     background:
       radial-gradient(ellipse at 30% 20%, rgba(255,217,223,0.6) 0%, transparent 60%),
       radial-gradient(ellipse at 80% 60%, rgba(242,223,209,0.5) 0%, transparent 55%),
@@ -86,11 +101,10 @@
   .hero h1 .accent { color: var(--primary); }
   .hero p.lede {
     font-size: 19px; font-weight: 300; color: var(--onBgVariant);
-    max-width: 520px; margin: 0 0 36px;
-    line-height: 1.55;
+    max-width: 540px; margin: 0 0 36px; line-height: 1.55;
   }
   @media (max-width: 900px) { .hero p.lede { margin-left: auto; margin-right: auto; } }
-  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
   @media (max-width: 900px) { .cta-row { justify-content: center; } }
   .btn {
     display: inline-flex; align-items: center; gap: 10px;
@@ -98,136 +112,145 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn:hover { text-decoration: none; transform: translateY(-1px); }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primCont) 100%);
-    color: white; box-shadow: 0 8px 24px rgba(126,82,92,0.3);
+  .btn-store {
+    background: var(--onBg); color: white; box-shadow: 0 8px 24px rgba(27,28,27,0.25);
+    flex-direction: column; align-items: flex-start; gap: 0; padding: 10px 26px; line-height: 1.25;
   }
-  .btn-primary:hover { box-shadow: 0 12px 32px rgba(126,82,92,0.4); }
-  .btn-secondary {
-    background: var(--surface); color: var(--onBg);
-    border: 1px solid var(--outline);
-  }
-  .tiny-note {
-    font-size: 13px; color: var(--muted); margin-top: 16px;
-  }
+  .btn-store small { font-size: 11px; font-weight: 500; opacity: 0.8; letter-spacing: 0.2px; }
+  .btn-store span { font-size: 17px; font-weight: 700; }
+  .btn-secondary { background: var(--surface); color: var(--onBg); border: 1px solid var(--outline); }
+  .tiny-note { font-size: 13px; color: var(--muted); margin-top: 16px; }
 
-  /* Phone mockup */
+  /* Phone mockup: a CSS-only Reveal (season, drape ring, four swatches) */
   .phone {
-    width: 100%; max-width: 380px; margin: 0 auto;
-    aspect-ratio: 9/19.5; border-radius: 48px;
-    background: linear-gradient(135deg, #7E525C 0%, #D6A1AB 100%);
-    box-shadow:
-      0 40px 80px rgba(126,82,92,0.25),
-      0 0 0 10px #1B1C1B,
-      0 0 0 11px #2A2020;
+    width: 100%; max-width: 340px; margin: 0 auto;
+    aspect-ratio: 9/19.5; border-radius: 48px; background: #FFFFFF;
+    box-shadow: 0 40px 80px rgba(126,82,92,0.25), 0 0 0 10px #1B1C1B, 0 0 0 11px #2A2020;
     position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    padding: 56px 28px 36px; text-align: center;
   }
   .phone::before {
-    content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-    width: 120px; height: 32px; background: #1B1C1B; border-radius: 20px;
+    content: ''; position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    width: 110px; height: 30px; background: #1B1C1B; border-radius: 20px;
   }
-  .phone-inner {
-    color: rgba(255,217,223,0.95);
-    font-family: 'Noto Serif', serif; font-style: italic;
-    font-size: 140px; letter-spacing: -4px;
-    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.2));
+  .phone .eyebrow { font-size: 10px; color: #6B7F6A; }
+  .phone .season { font-family: 'Noto Serif', serif; font-style: italic; font-size: 34px; line-height: 1.1; color: var(--onBg); margin: 0; }
+  .drape {
+    width: 170px; height: 170px; border-radius: 50%;
+    background: conic-gradient(#8A5A44 0 25%, #B5723F 0 50%, #6E6B3A 0 75%, #A65E5A 0 100%);
+    display: flex; align-items: center; justify-content: center;
   }
+  .drape .face {
+    width: 118px; height: 118px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 38%, #E9C3A6 0%, #D9A988 55%, #C89272 100%);
+    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.08);
+  }
+  .swatches { display: flex; gap: 10px; }
+  .swatches i { width: 34px; height: 34px; border-radius: 50%; display: block; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--outline); }
+  .phone .caption { font-size: 12px; color: var(--muted); margin: 0; }
 
   /* ─── Sections ───────────────────────── */
-  .section-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+  .section-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
   .section-head h2 {
     font-family: 'Noto Serif', serif; font-style: italic; font-weight: 400;
-    font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.01em;
-    margin: 16px 0 16px;
+    font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.01em; margin: 16px 0 16px;
   }
-  .section-head p { font-size: 17px; color: var(--onBgVariant); line-height: 1.6; }
+  .section-head p { font-size: 17px; color: var(--onBgVariant); line-height: 1.6; margin: 0; }
 
-  /* ─── Features ───────────────────────── */
-  .features { background: var(--bg); }
-  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  @media (max-width: 900px) { .feature-grid { grid-template-columns: 1fr; } }
+  /* ─── Feature cards ──────────────────── */
+  .feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .feature-grid.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 1000px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } .feature-grid.three { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .feature-grid { grid-template-columns: 1fr; } }
   .feature-card {
     background: var(--surface); border-radius: 24px; padding: 32px;
     border: 1px solid var(--outline);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(27,28,27,0.08);
-  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(27,28,27,0.08); }
   .feature-icon {
     width: 48px; height: 48px; border-radius: 100px;
     background: var(--primFixed); color: var(--primary);
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px; margin-bottom: 20px;
+    font-size: 22px; margin-bottom: 20px;
   }
-  .feature-card h3 { font-size: 20px; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .feature-card h3 { font-size: 19px; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.01em; }
   .feature-card p { margin: 0; color: var(--onBgVariant); font-size: 15px; line-height: 1.6; }
+
+  /* ─── Honest measurement band ────────── */
+  .honest { background: var(--onBg); color: #fff; }
+  .honest .section-head h2, .honest .section-head p { color: #fff; }
+  .honest .section-head p { opacity: 0.8; }
+  .honest .eyebrow { color: var(--primCont); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .stats { grid-template-columns: 1fr; } }
+  .stat { border: 1px solid rgba(255,255,255,0.18); border-radius: 24px; padding: 28px; }
+  .stat .num { font-family: 'Noto Serif', serif; font-style: italic; font-size: 44px; line-height: 1; color: var(--primFixed); }
+  .stat h3 { font-size: 17px; font-weight: 600; margin: 14px 0 8px; }
+  .stat p { margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.78); }
+
+  /* ─── Split (men's grooming) ─────────── */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+  .split h2 { font-family: 'Noto Serif', serif; font-style: italic; font-weight: 400; font-size: clamp(30px, 3.6vw, 44px); margin: 14px 0 16px; }
+  .split p { color: var(--onBgVariant); font-size: 17px; }
+  .checks { list-style: none; padding: 0; margin: 20px 0 0; }
+  .checks li { padding: 8px 0; font-size: 15px; color: var(--onBgVariant); display: flex; gap: 10px; }
+  .checks li::before { content: '✓'; color: var(--primary); font-weight: 700; }
+  .panel { background: var(--tertFixed); border-radius: 28px; padding: 36px; }
+  .panel .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(80,68,68,0.15); font-size: 15px; }
+  .panel .row:last-child { border-bottom: 0; }
+  .panel .row b { font-weight: 600; }
 
   /* ─── How it works ────────────────────── */
   .how { background: linear-gradient(180deg, var(--bg) 0%, #F5F0EB 100%); }
   .step-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
   @media (max-width: 900px) { .step-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .step-grid { grid-template-columns: 1fr; } }
-  .step-num {
-    font-family: 'Noto Serif', serif; font-style: italic;
-    font-size: 48px; color: var(--primCont); line-height: 1; margin-bottom: 12px;
-  }
+  .step-num { font-family: 'Noto Serif', serif; font-style: italic; font-size: 48px; color: var(--primCont); line-height: 1; margin-bottom: 12px; }
   .step h3 { font-size: 17px; font-weight: 600; margin: 0 0 8px; }
   .step p { margin: 0; font-size: 14px; color: var(--onBgVariant); line-height: 1.6; }
 
+  /* ─── Privacy strip ───────────────────── */
+  .privacy-strip { padding: 64px 0; }
+  .privacy-box { background: var(--surface); border: 1px solid var(--outline); border-radius: 28px; padding: 40px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: center; }
+  @media (max-width: 900px) { .privacy-box { grid-template-columns: 1fr; } }
+  .privacy-box h2 { font-family: 'Noto Serif', serif; font-style: italic; font-weight: 400; font-size: 34px; margin: 10px 0 0; }
+
   /* ─── Pricing ─────────────────────────── */
-  .pricing { background: var(--bg); }
-  .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 720px; margin: 0 auto; }
+  .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 760px; margin: 0 auto; }
   @media (max-width: 640px) { .plans { grid-template-columns: 1fr; } }
-  .plan {
-    background: var(--surface); border-radius: 24px; padding: 36px 28px;
-    border: 2px solid var(--outline); position: relative;
-  }
+  .plan { background: var(--surface); border-radius: 24px; padding: 36px 28px; border: 2px solid var(--outline); position: relative; }
   .plan.featured { border-color: var(--primary); }
   .plan-badge {
     position: absolute; top: -12px; left: 28px;
     background: var(--primary); color: white; font-size: 11px; font-weight: 700;
-    letter-spacing: 1.4px; padding: 4px 12px; border-radius: 100px;
-    text-transform: uppercase;
+    letter-spacing: 1.4px; padding: 4px 12px; border-radius: 100px; text-transform: uppercase;
   }
-  .plan h3 { font-size: 20px; font-weight: 600; margin: 0 0 8px; }
-  .plan .price {
-    font-family: 'Noto Serif', serif; font-style: italic;
-    font-size: 42px; color: var(--primary); line-height: 1; margin: 12px 0;
-  }
+  .plan h3 { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
+  .plan .sub { color: var(--onBgVariant); font-size: 14px; margin: 0; }
+  .plan .price { font-family: 'Noto Serif', serif; font-style: italic; font-size: 42px; color: var(--primary); line-height: 1; margin: 16px 0 6px; }
   .plan .price-period { font-family: 'Manrope', sans-serif; font-style: normal; font-size: 16px; color: var(--muted); }
+  .plan .alt { font-size: 14px; color: var(--onBgVariant); margin: 0; }
   .plan ul { list-style: none; padding: 0; margin: 20px 0 0; }
-  .plan li { padding: 8px 0; font-size: 14px; color: var(--onBgVariant); display: flex; align-items: center; gap: 10px; }
+  .plan li { padding: 7px 0; font-size: 14px; color: var(--onBgVariant); display: flex; gap: 10px; }
   .plan li::before { content: '✓'; color: var(--primary); font-weight: 700; }
-  .plan p.note { font-size: 13px; color: var(--muted); margin: 20px 0 0; }
+  .fine { max-width: 760px; margin: 24px auto 0; font-size: 13px; color: var(--muted); text-align: center; }
 
   /* ─── Final CTA ───────────────────────── */
-  .final {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primCont) 100%);
-    color: white; text-align: center;
-  }
-  .final h2 { font-family: 'Noto Serif', serif; font-style: italic; font-weight: 400;
-              font-size: clamp(32px, 4vw, 48px); margin: 0 0 16px; }
-  .final p { font-size: 17px; opacity: 0.9; margin: 0 0 32px; }
-  .final .btn-primary {
-    background: var(--bg); color: var(--primary); box-shadow: 0 12px 32px rgba(0,0,0,0.2);
-  }
+  .final { background: linear-gradient(135deg, var(--primary) 0%, var(--primCont) 100%); color: white; text-align: center; }
+  .final h2 { font-family: 'Noto Serif', serif; font-style: italic; font-weight: 400; font-size: clamp(32px, 4vw, 48px); margin: 0 0 16px; }
+  .final p { font-size: 17px; opacity: 0.92; margin: 0 0 32px; }
+  .final .btn-store { background: var(--bg); color: var(--onBg); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
 
   /* ─── Footer ──────────────────────────── */
-  footer {
-    background: var(--onBg); color: rgba(255,255,255,0.6);
-    padding: 60px 0 40px; font-size: 14px;
-  }
-  .footer-inner {
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
-  }
-  footer a { color: rgba(255,255,255,0.75); margin-right: 24px; }
+  footer { background: var(--onBg); color: rgba(255,255,255,0.6); padding: 60px 0 40px; font-size: 14px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; }
+  footer a { color: rgba(255,255,255,0.8); margin-right: 24px; }
   footer a:hover { color: white; }
-  .footer-brand {
-    font-family: 'Noto Serif', serif; font-style: italic; color: white; font-size: 20px;
-  }
+  .footer-brand { font-family: 'Noto Serif', serif; font-style: italic; color: white; font-size: 20px; }
+  .disclaimer { margin-top: 28px; font-size: 12px; color: rgba(255,255,255,0.45); max-width: 720px; }
 </style>
 </head>
 <body>
@@ -236,75 +259,152 @@
   <div class="nav-inner">
     <a href="/" class="brand">vela</a>
     <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
+      <a href="#colors">Color analysis</a>
+      <a href="#skin">Skin</a>
       <a href="#pricing">Pricing</a>
-      <a href="#cta" class="nav-cta">Join beta</a>
+      <a href="https://apps.apple.com/app/id6762179147" class="nav-cta">Download</a>
     </div>
   </div>
 </nav>
 
+<main>
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
       <div>
-        <span class="eyebrow">Available on iOS · Beta</span>
-        <h1>Your beauty,<br><span class="accent serif">clarified.</span></h1>
+        <span class="eyebrow">AI color analysis for iPhone</span>
+        <h1>Find your colors.<br><span class="accent serif">See them on you.</span></h1>
         <p class="lede">
-          Vela reads your skin in a single selfie — then styles every outfit to your exact colour season.
-          AI-powered skin analysis, personalised routines, and a stylist that actually knows what looks good on you.
+          One selfie gives you your color season out of 12, a palette you can actually use,
+          and virtual draping around your own face, so you can see what works before you buy it.
+          Then keep an honest eye on your skin, scan after scan.
         </p>
         <div class="cta-row">
-          <a href="#cta" class="btn btn-primary">Get early access</a>
+          <a href="https://apps.apple.com/app/id6762179147" class="btn btn-store" aria-label="Download Vela on the App Store">
+            <small>Download on the</small><span>App Store</span>
+          </a>
           <a href="#how" class="btn btn-secondary">See how it works</a>
         </div>
-        <p class="tiny-note">Free 7-day trial · Cancel anytime</p>
+        <p class="tiny-note">Free scan shows your season. Vela Pro: US$49.99/year with a 3-day free trial, or US$6.99/week.</p>
       </div>
-      <div>
-        <div class="phone"><div class="phone-inner">V</div></div>
+      <div aria-hidden="true">
+        <div class="phone">
+          <span class="eyebrow">Your color season</span>
+          <p class="season">Soft Autumn</p>
+          <div class="drape"><div class="face"></div></div>
+          <div class="swatches">
+            <i style="background:#8A5A44"></i><i style="background:#B5723F"></i><i style="background:#6E6B3A"></i><i style="background:#A65E5A"></i>
+          </div>
+          <p class="caption">Tap a color to drape it</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="features" class="features">
+<section id="colors">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">What you get</span>
-      <h2>A beauty OS that actually knows you</h2>
-      <p>No generic advice. No guesswork. Every recommendation is tailored to your skin, your wardrobe, and your colour season.</p>
+      <span class="eyebrow">Color analysis</span>
+      <h2>Your season, measured from your photo</h2>
+      <p>Vela reads your undertone, depth, contrast and clarity from one selfie, then places you in one of 12 seasons. A few quick questions, like which metals and whites suit you best, help fine-tune it.</p>
     </div>
     <div class="feature-grid">
       <div class="feature-card">
-        <div class="feature-icon">✦</div>
-        <h3>AI skin analysis</h3>
-        <p>A single selfie reveals your skin type, Fitzpatrick scale, undertone, and 6 scored dimensions — from hydration to evenness. Tracks change over time.</p>
-      </div>
-      <div class="feature-card">
         <div class="feature-icon">◈</div>
-        <h3>Your colour season</h3>
-        <p>We classify you into one of 12 seasonal palettes (Spring Warm, Winter Cool, etc.) and filter every clothing recommendation through it.</p>
+        <h3>Your color season</h3>
+        <p>One of 12 seasons, with how strong the match is and the runner-up when it is close. No quiz guesswork.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">✻</div>
-        <h3>Smart wardrobe</h3>
-        <p>Snap your clothes once. Vela generates outfit ideas for every occasion — work, date night, weekend brunch — using what you already own.</p>
+        <div class="feature-icon">◐</div>
+        <h3>Draping on your own face</h3>
+        <p>Swap colors around your own photo and see which ones light you up and which ones wash you out.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✦</div>
+        <h3>A palette you can use</h3>
+        <p>Best shades, neutrals and accents, colors to skip, plus makeup, hair color and metal tips for your season.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⬭</div>
+        <h3>Your face shape</h3>
+        <p>Your face shape from the same photo, with simple tips on what flatters it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="honest" id="honest">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Honest measurement</span>
+      <h2>Measured the same way, every time</h2>
+      <p>Photos change with light and angle. Vela knows by how much, so it never dresses up normal variation as a result.</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">478</div>
+        <h3>facial points</h3>
+        <p>Our own engine maps 478 points on your face to find the skin zones and read color the same way on every scan.</p>
+      </div>
+      <div class="stat">
+        <div class="num">8</div>
+        <h3>skin zones</h3>
+        <p>Forehead, cheeks, nose, chin, under-eyes and T-zone, each measured on its own so changes in one area are not lost in the average.</p>
+      </div>
+      <div class="stat">
+        <div class="num">0</div>
+        <h3>made-up progress</h3>
+        <p>A change only counts as progress when it is bigger than normal photo-to-photo variation. Otherwise we say stable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skin">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">The ongoing layer</span>
+      <h2>Keep an eye on your skin, calmly</h2>
+      <p>Scan weekly and follow how your skin looks over time, with a routine built around the products you already own.</p>
+    </div>
+    <div class="feature-grid three">
+      <div class="feature-card">
+        <div class="feature-icon">◌</div>
+        <h3>Skin appearance tracking</h3>
+        <p>Evenness, comfort, radiance, smoothness and under-eye scores, with trends and before-and-after views over weeks.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">☽</div>
-        <h3>Personalised routine</h3>
-        <p>AM and PM skincare steps built from your scan + products you already use. Flags ingredient conflicts before they irritate.</p>
+        <h3>Routine and ingredient alerts</h3>
+        <p>Add products by photo or barcode. Vela builds your morning and evening routine and flags ingredient pairings that do not belong together.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">❋</div>
-        <h3>Vela chat</h3>
-        <p>Ask anything — "will this blush suit me?", "what jeans for my body?", "is retinol safe with my vitamin C?". Context-aware, always on.</p>
+        <h3>Ask</h3>
+        <p>Questions about your colors, makeup, grooming or routine, answered with your results in mind. Powered by Google Gemini.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">✿</div>
-        <h3>Product matching</h3>
-        <p>Recommends real products from a curated catalogue of skincare, makeup, and fashion — matched to your profile, not the algorithm of the day.</p>
-      </div>
+    </div>
+  </div>
+</section>
+
+<section id="men">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">For men too</span>
+      <h2>Face shape, beard and the colors that work with them</h2>
+      <p>Vela reads your beard from the same selfie and keeps it practical: shaping ideas for your face shape and colors that suit your beard and skin.</p>
+      <ul class="checks">
+        <li>Beard style, coverage and color, including grey</li>
+        <li>Shaping ideas for your face shape</li>
+        <li>Colors that suit your skin and your beard</li>
+      </ul>
+    </div>
+    <div class="panel" aria-hidden="true">
+      <div class="row"><span>Face shape</span><b>Oval</b></div>
+      <div class="row"><span>Beard style</span><b>Short beard</b></div>
+      <div class="row"><span>Beard color</span><b>Dark brown</b></div>
+      <div class="row"><span>Season</span><b>Deep Winter</b></div>
     </div>
   </div>
 </section>
@@ -313,89 +413,123 @@
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">How it works</span>
-      <h2>Four minutes to your beauty blueprint</h2>
+      <h2>Two minutes to your season</h2>
     </div>
     <div class="step-grid">
       <div class="step">
         <div class="step-num">01</div>
         <h3>Take a selfie</h3>
-        <p>30 seconds in natural light. Vela's AI reads your skin with medical-grade precision.</p>
+        <p>Face a window in daylight, no filters, hair off your face. Vela guides the framing and the light.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
         <h3>Meet your season</h3>
-        <p>Get your colour season, face shape, undertone, and a full skin health report.</p>
+        <p>See your season, try colors on your own photo and get your first four palette colors free.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Build your routine</h3>
-        <p>A custom AM/PM skincare plan. Add your products — we flag conflicts automatically.</p>
+        <h3>Share your card</h3>
+        <p>A clean season card to share with friends. What's your season?</p>
       </div>
       <div class="step">
         <div class="step-num">04</div>
-        <h3>Style every day</h3>
-        <p>Generate outfits that flatter your season from items you own — or shop for gaps.</p>
+        <h3>Go deeper with Pro</h3>
+        <p>Your full palette and analysis, weekly skin scans with honest progress, and your routine.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="pricing" class="pricing">
+<section class="privacy-strip">
+  <div class="container">
+    <div class="privacy-box">
+      <div>
+        <span class="eyebrow">Your face, your data</span>
+        <h2>Private by design</h2>
+      </div>
+      <ul class="checks">
+        <li>Your photo is measured by our own engine and described by Google Gemini, only after you agree.</li>
+        <li>Never sold, never used for ads, never used to recognize who you are.</li>
+        <li>Delete a scan or your whole account anytime, right in the app.</li>
+        <li><a href="/privacy.html">Read our privacy policy</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Pricing</span>
       <h2>Start free. Go Pro when you're ready.</h2>
-      <p>Free gives you a taste. Pro unlocks the full beauty OS.</p>
+      <p>Your free scan tells you your season. Vela Pro shows you everything behind it and keeps tracking.</p>
     </div>
     <div class="plans">
       <div class="plan">
-        <h3>Free</h3>
-        <p style="color: var(--onBgVariant); font-size: 14px; margin: 4px 0 0;">To see what Vela is</p>
-        <div class="price">$0<span class="price-period"> forever</span></div>
+        <h3>Free scan</h3>
+        <p class="sub">See your season</p>
+        <div class="price">$0</div>
         <ul>
-          <li>1 skin scan</li>
-          <li>5 outfit generations</li>
-          <li>Basic routine</li>
-          <li>Limited chat</li>
+          <li>Your color season out of 12</li>
+          <li>A 4-color preview of your palette</li>
+          <li>Your season share card</li>
+          <li>A few Ask messages a day</li>
         </ul>
       </div>
       <div class="plan featured">
-        <div class="plan-badge">Save 50%</div>
-        <h3>Pro</h3>
-        <p style="color: var(--onBgVariant); font-size: 14px; margin: 4px 0 0;">The full beauty OS</p>
-        <div class="price">$59.99<span class="price-period"> / year</span></div>
+        <div class="plan-badge">3-day free trial</div>
+        <h3>Vela Pro</h3>
+        <p class="sub">The full picture</p>
+        <div class="price">US$49.99<span class="price-period"> / year</span></div>
+        <p class="alt">or US$6.99 / week</p>
         <ul>
-          <li>Unlimited skin scans + progress tracking</li>
-          <li>Unlimited outfits + weekly plan</li>
-          <li>Personalised routine + ingredient conflicts</li>
-          <li>Deep chat with memory</li>
-          <li>Export skin report as PDF</li>
+          <li>Full palette, colors to skip and interactive draping</li>
+          <li>Makeup or beard, hair and metal tips</li>
+          <li>Face shape guide</li>
+          <li>Full skin analysis</li>
+          <li>Progress tracking and before and after</li>
+          <li>Routine tools and ingredient alerts</li>
+          <li>More Ask messages</li>
         </ul>
-        <p class="note">Or $9.99 / month. 7-day free trial. Cancel anytime.</p>
       </div>
     </div>
+    <p class="fine">
+      The 3-day free trial applies to the annual plan for eligible new subscribers. Subscriptions renew automatically
+      until cancelled in your App Store settings at least 24 hours before the end of the current period.
+      Prices in US dollars; in Canada the App Store shows prices in Canadian dollars. See our <a href="/terms.html">Terms of Use</a>.
+    </p>
   </div>
 </section>
 
-<section id="cta" class="final">
+<section id="download" class="final">
   <div class="container">
-    <h2>See yourself, clearly.</h2>
-    <p>Join the beta. iOS TestFlight access opening soon.</p>
-    <a href="mailto:hello@velastyle.app?subject=Vela%20beta%20access" class="btn btn-primary">Request beta invite</a>
+    <h2>Meet your season.</h2>
+    <p>Free to download. Your first scan takes about a minute.</p>
+    <a href="https://apps.apple.com/app/id6762179147" class="btn btn-store" aria-label="Download Vela on the App Store">
+      <small>Download on the</small><span>App Store</span>
+    </a>
   </div>
 </section>
+</main>
 
 <footer>
-  <div class="container footer-inner">
-    <div>
-      <div class="footer-brand">vela</div>
-      <div style="margin-top: 6px; font-size: 12px; color: rgba(255,255,255,0.4);">© 2026 Vela. All rights reserved.</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">vela</div>
+        <div style="margin-top: 6px; font-size: 12px; color: rgba(255,255,255,0.45);">&copy; 2026 Vela. All rights reserved.</div>
+      </div>
+      <div>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/privacy.html#health-data">Consumer health data</a>
+        <a href="mailto:support@velastyle.app">Contact</a>
+      </div>
     </div>
-    <div>
-      <a href="/terms.html">Terms</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="mailto:hello@velastyle.app">Contact</a>
-    </div>
+    <p class="disclaimer">
+      Vela is a cosmetic app for color analysis and skin appearance. It is not a medical device and does not diagnose or treat any condition.
+      Results depend on your photo and lighting. Vela is for people 18 and older in the United States and Canada.
+    </p>
   </div>
 </footer>
 

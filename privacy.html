@@ -1,13 +1,25 @@
 <!doctype html>
+<!--
+  DRAFT PENDING COUNSEL REVIEW (October 2026). Not final legal text.
+  Vela Privacy Policy for the US and Canada, incl. the biometric notice (#biometric)
+  and the Consumer Health Data Privacy Policy (#health-data) linked from the home page.
+  Source of truth: lib/legalContent.ts (PRIVACY_POLICY), rendered in the app by
+  app/legal/privacy.tsx. lib/__tests__/legalPages.test.ts fails when a sentence
+  there is missing here, so edit both together. Entity, emails, minimum age and
+  prices: lib/legalInfo.ts. Open questions: docs/relaunch/legal-review-brief.md.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Privacy Policy — Vela</title>
+<title>Privacy Policy: Vela</title>
+<meta name="description" content="How Vela collects, uses and protects your data, including your face photo, who processes it and your rights in the US and Canada." />
 <link rel="icon" href="/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --primary:#7E525C; --bg:#FBFAF7; --onBg:#1B1C1B; --onBgVariant:#504444; --outline:#D4C2C2; }
+  :root { --primary:#7E525C; --bg:#FBFAF7; --onBg:#1B1C1B; --onBgVariant:#504444; --outline:#D4C2C2; --primFixed:#FFD9DF; }
   *, *::before, *::after { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--onBg); font-family: 'Manrope', system-ui, sans-serif; font-weight: 300; line-height: 1.7; }
   .brand { font-family: 'Noto Serif', serif; font-style: italic; font-size: 24px; color: var(--onBg); text-decoration: none; }
@@ -20,111 +32,222 @@
   h2 { font-family: 'Noto Serif', serif; font-style: italic; font-weight: 400; font-size: 26px; margin: 40px 0 16px; letter-spacing: -0.01em; }
   h3 { font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
   p, li { font-size: 16px; color: var(--onBgVariant); }
+  strong { font-weight: 600; color: var(--onBg); }
   ul { padding-left: 24px; }
   li { margin-bottom: 8px; }
-  a { color: var(--primary); }
+  a { color: var(--primary); overflow-wrap: anywhere; }
+  section { scroll-margin-top: 24px; }
+  .summary { background: #fff; border: 1px solid var(--outline); border-radius: 20px; padding: 8px 24px 12px; margin-top: 32px; }
+  .summary h2 { margin-top: 20px; }
   footer { text-align: center; padding: 40px 24px; color: rgba(27,28,27,0.45); font-size: 13px; border-top: 1px solid var(--outline); margin-top: 80px; }
+  footer a { color: inherit; text-decoration: underline; }
 </style>
 </head>
 <body>
 <nav>
   <div class="nav-inner">
     <a href="/" class="brand">vela</a>
-    <div><a href="/">← Back to home</a></div>
+    <div><a href="/">Back to home</a></div>
   </div>
 </nav>
-<div class="wrap">
+<main class="wrap">
   <h1>Privacy Policy</h1>
-  <p class="meta">Last updated: April 15, 2026</p>
+  <p class="meta">Last updated: October 2026</p>
 
-  <p>
-    This Privacy Policy describes how Vela ("we", "us", "our") collects, uses, and protects
-    information when you use the Vela mobile application (the "App"). By using the App you
-    agree to the practices described here.
-  </p>
+  <p>650 Vela Inc. (“Vela”, “we”, “us”) makes the Vela app. This policy explains what we collect when you use Vela, why, who helps us process it, how long we keep it and the choices you have. It covers the Vela iOS app and velastyle.app. Vela is offered in the United States and Canada.</p>
 
-  <h2>1. Information we collect</h2>
+  <section id="summary" class="summary">
+    <h2>The short version</h2>
+    <ul>
+      <li>Vela reads the face photo you take to find your colour season, face shape and how your skin looks, and to track it over time. It is a cosmetic tool, not a medical one.</li>
+      <li>Your photo is measured by our own Vela Face Engine and described by Google Gemini, a third-party AI. We ask for your permission before your first scan, and again if this changes.</li>
+      <li>We never sell your personal information, never use your face data for ads and never use it to recognise who you are.</li>
+      <li>You can delete a scan or your whole account at any time in the app.</li>
+    </ul>
+  </section>
 
-  <h3>1.1 Account information</h3>
-  <p>When you create an account we collect your email address and (optionally) your name.
-  If you sign in with Apple, we receive the identifier Apple issues us, plus whatever
-  email/name you choose to share.</p>
+  <section id="collect">
+    <h2>1. What we collect</h2>
+    <h3>1.1 Face photos and face data</h3>
+    <ul>
+      <li>The face photo you take for each scan.</li>
+      <li>Face geometry: to read the photo, our engine maps 478 points on your face. It uses them in memory to find the skin zones and measure proportions, then discards them. We never store these points or a face template.</li>
+      <li>Results derived from the photo, which we store: colour values, undertone, depth, contrast, colour season, face shape, eye shape, skin appearance scores (such as evenness, radiance and smoothness), facial hair style, coverage and colour when shown, and notes about the lighting.</li>
+      <li>Your answers to the optional colour check questions.</li>
+    </ul>
+    <p>We call all of this “face data” and treat it as biometric and sensitive personal information (section 4).</p>
+    <h3>1.2 Account details</h3>
+    <ul>
+      <li>You can use Vela without an account: we create an anonymous account ID for your device.</li>
+      <li>If you save your results: your email address, or the identifier and email Apple shares when you use Sign in with Apple (which can be a private relay address).</li>
+      <li>Optional: your name, gender and region (United States or Canada).</li>
+      <li>Your answers to two setup questions: what you want from Vela (colours, skin or both) and whether you want makeup or grooming tips.</li>
+    </ul>
+    <h3>1.3 What you add</h3>
+    <ul>
+      <li>Skincare products you add: name, brand, category, ingredients, and the product or label photos you take or pick.</li>
+      <li>Routine check-ins and the reminders you set.</li>
+      <li>Messages you send in Ask.</li>
+    </ul>
+    <h3>1.4 Purchases</h3>
+    <p>Your subscription status, plan, trial and renewal dates, from Apple through RevenueCat. We never receive your card or payment details.</p>
+    <h3>1.5 Usage and diagnostics</h3>
+    <ul>
+      <li>App events such as screens viewed, scan completed or paywall viewed, with the app version, device model and iOS version.</li>
+      <li>Crash reports and performance traces.</li>
+    </ul>
+    <p>Analytics can include your plan, region and what you want from Vela. Analytics and crash reports never include your photo, face data, colour season, scores, email or name.</p>
+    <h3>1.6 Approximate location</h3>
+    <p>Your country only (United States or Canada). At first launch we look it up from your IP address with ipapi.co, or use your device region. It sets the product catalogue, currency and retailers. We do not use GPS or your precise location.</p>
+  </section>
 
-  <h3>1.2 Skin analysis photos</h3>
-  <p>Selfies you capture for skin analysis are sent to our AI analysis service (provided by
-  Google Gemini, Anthropic Claude, or OpenAI depending on availability). Analysis results
-  (e.g. skin type, colour season, scored attributes) are stored in your account so you can
-  track changes over time. You can delete your photos and analyses at any time from the app.</p>
+  <section id="use">
+    <h2>2. How we use it</h2>
+    <ul>
+      <li>To run Vela: scans, results, your palette and virtual draping, progress tracking, your routine, product checks and Ask.</li>
+      <li>To compare scans over time. We only call a change progress when it is bigger than normal photo-to-photo variation.</li>
+      <li>To suggest skincare and makeup products that fit your results. Some are affiliate links (section 3.3).</li>
+      <li>To manage your plan, free limits and subscription.</li>
+      <li>To keep Vela secure and prevent abuse.</li>
+      <li>To understand how the app is used and fix bugs, with analytics and crash reports that never contain face data.</li>
+      <li>To send sign-in codes and answer your emails.</li>
+      <li>To meet legal obligations.</li>
+    </ul>
+    <h3>What we never do</h3>
+    <ul>
+      <li>Sell or rent your personal information, or share it for cross-context behavioural advertising.</li>
+      <li>Use face data for advertising, marketing or data mining, or to identify or recognise you.</li>
+      <li>Use your photos or face data to train AI models, ours or anyone else’s. If we ever want to, we will ask for your separate, opt-in permission first.</li>
+      <li>Track you across other companies’ apps or websites.</li>
+    </ul>
+  </section>
 
-  <h3>1.3 Wardrobe photos</h3>
-  <p>Photos of clothing items you add to your wardrobe are processed by the same AI
-  services to classify category, colour, and style. Processed items are stored in your
-  account; the original photo is retained only if you choose to.</p>
+  <section id="sharing">
+    <h2>3. Who we share it with</h2>
+    <h3>3.1 Service providers</h3>
+    <p>These providers process data only on our instructions, to provide their service to us.</p>
+    <ul>
+      <li>Vela Face Engine, our own service hosted by Google Cloud in Toronto, Canada: receives your face photo, measures it in memory and keeps nothing.</li>
+      <li>Google Gemini API (Google LLC, United States), a third-party AI: receives your face photo on every scan (to describe features like eye shape and skin finish, and to estimate your full result if our engine is unavailable); your Ask messages with your recent chat and a summary of your results; and your product list and product label photos with a summary of your results, for routines and product checks. Under Google’s paid API terms, Google does not use this data to improve its products or train its models, and logs it for a limited period (currently 55 days) only to detect abuse and meet legal obligations.</li>
+      <li>Supabase (Supabase Inc., servers in Oregon, United States): our database, private photo storage, sign-in and server functions.</li>
+      <li>RevenueCat (RevenueCat Inc., United States): your subscription status, linked to your Vela account ID.</li>
+      <li>Apple: Sign in with Apple and App Store payments.</li>
+      <li>PostHog (PostHog Inc., United States): product analytics.</li>
+      <li>Sentry (Functional Software Inc., United States): crash and performance reports.</li>
+      <li>Our email delivery provider: sign-in codes.</li>
+      <li>ipapi.co (Kloudend Inc.): your IP address, once, to find your country.</li>
+      <li>Open Beauty Facts, Open Food Facts and UPCitemdb: only the barcode number, when you scan a product.</li>
+    </ul>
+    <p>If we add a provider that receives your face photo, we will update this policy and ask for your consent again before your photo goes to it.</p>
+    <h3>3.2 Other sharing</h3>
+    <ul>
+      <li>When you choose to share something, like your season card.</li>
+      <li>When the law requires it, or to protect the safety, rights or property of people or Vela.</li>
+      <li>If Vela is merged or acquired: we will tell you first, and your face data stays protected by this policy or we ask for your consent again.</li>
+    </ul>
+    <h3>3.3 Affiliate links</h3>
+    <p>When you tap a product, we record the click (which product and where in the app) and the retailer, such as Amazon, sees your visit like any other website visit. We may earn a commission. We never share face data with retailers.</p>
+  </section>
 
-  <h3>1.4 Usage data</h3>
-  <p>We collect anonymous product-interaction analytics (via PostHog) such as which
-  features you use, which screens you view, and how often. This data is tied to a
-  pseudonymous user ID and is used to improve the App. We do not use this data for
-  advertising or tracking across other apps or websites.</p>
+  <section id="biometric">
+    <h2>4. Face data and biometric notice</h2>
+    <p><strong>Purpose.</strong> We use face data only to give you your colour analysis, face shape guide, skin appearance tracking and facial hair notes, and to keep those features working.</p>
+    <p><strong>Consent.</strong> Before your first scan we show you what we collect and who processes it, and ask you to tap I agree. That is your written release. We ask again whenever this notice changes in a material way.</p>
+    <p><strong>What is derived.</strong> Face geometry (478 points) is computed in memory and discarded. The results listed in section 1.1 are stored.</p>
+    <p><strong>No identification.</strong> We do not use face data to identify you or anyone else, and we do not build a face template.</p>
+    <p><strong>No sale.</strong> We never sell, lease or trade face data, or otherwise profit from it, and never use it for ads.</p>
+    <p><strong>Disclosure.</strong> Only to the providers named in section 3.1, only to run your scan, or when the law requires it.</p>
+    <p><strong>Retention and destruction.</strong> We keep face data while you use Vela so you can see your history. We permanently delete it at the earliest of: when you delete the scan, when you delete your account, or 12 months after you last opened Vela. Deleted data leaves our backups within 30 days. The Vela Face Engine keeps nothing, and Google keeps Gemini logs for up to 55 days.</p>
+    <p><strong>Security.</strong> Face photos sit in private storage that only your account can reach through short-lived links. Data is encrypted in transit and at rest, and access is limited to the few people who run Vela.</p>
+    <p><strong>Withdrawing consent.</strong> Delete your scans or your account in the app, or email <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>. We then stop processing your face data.</p>
+  </section>
 
-  <h3>1.5 Crash & performance data</h3>
-  <p>We use Sentry to capture crash reports and performance metrics. This data is not
-  linked to your personal identity and is used only to diagnose and fix problems.</p>
+  <section id="retention">
+    <h2>5. How long we keep data</h2>
+    <ul>
+      <li>Face photos and face data: see section 4.</li>
+      <li>Account details, products and routine history: until you delete them or your account.</li>
+      <li>Ask conversations: we do not store them on our servers. They stay on your phone until you leave the chat, and Google may keep them for up to 55 days.</li>
+      <li>Purchase records: Apple and RevenueCat keep them as required for accounting and tax.</li>
+      <li>Analytics events and crash reports: kept by PostHog and Sentry for a limited time under our settings with them, then deleted.</li>
+    </ul>
+    <p>When you delete your account, your sign-in, profile, scans, photos, products and routine history are deleted from our live systems right away and leave our backups within 30 days. Anything the law requires us to keep is kept only as long as the law requires.</p>
+  </section>
 
-  <h3>1.6 Location</h3>
-  <p>We infer your country (US or CA) from your device locale so we can show
-  weather-appropriate outfit suggestions and region-correct product availability. We do
-  not collect your precise GPS location.</p>
+  <section id="rights">
+    <h2>6. Your choices and rights</h2>
+    <p>Everyone can:</p>
+    <ul>
+      <li>Get a copy of your data: Account, then Export my data.</li>
+      <li>Correct your details in Account, or take a new scan.</li>
+      <li>Delete a scan from your scan history, or your whole account from Account, then Delete my account.</li>
+      <li>Withdraw consent for face processing by deleting your scans or your account.</li>
+      <li>Turn reminders off in Account, then Notifications.</li>
+      <li>Email <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a> for anything else.</li>
+    </ul>
+    <p>We answer within 30 days, verify requests through your signed-in app or the email on your account, and never treat you differently for using your rights. Where the law allows, you can ask someone to act for you as your authorised agent.</p>
+  </section>
 
-  <h2>2. How we use your information</h2>
-  <ul>
-    <li>To provide skin analysis and generate your beauty profile.</li>
-    <li>To generate outfit suggestions based on your wardrobe and colour season.</li>
-    <li>To personalise skincare routine recommendations.</li>
-    <li>To enable the Vela chat assistant with context about your profile.</li>
-    <li>To process subscription purchases and promo-code redemptions.</li>
-    <li>To diagnose bugs and improve app quality.</li>
-  </ul>
+  <section id="us-rights">
+    <h2>7. United States</h2>
+    <h3>7.1 California</h3>
+    <p>In the last 12 months we collected: identifiers (email, account IDs); customer records (name); commercial information (subscription purchases); internet or other electronic activity (app events); approximate location (country); sensory information (photos); inferences (colour season, skin appearance results); and sensitive personal information (face data, account login). Sources: you, your device, Apple and RevenueCat. Purposes: section 2. We disclose it for business purposes to the providers in section 3.1.</p>
+    <p>We do not sell or share personal information, and we use sensitive personal information only to provide the services you ask for, so there is nothing to opt out of or limit. You have the right to know, access, correct, delete and get a copy of your data, and not to be treated differently for using these rights. Retention: sections 4 and 5.</p>
+    <h3>7.2 Illinois</h3>
+    <p>Section 4 is our public written policy for biometric data, with our retention schedule and destruction guidelines. We get your written release through the consent screen before any scan, never sell, lease, trade or otherwise profit from face data, and destroy it on the schedule in section 4, and in any case within 3 years of your last interaction with Vela.</p>
+    <h3>7.3 Texas</h3>
+    <p>We tell you what we capture and get your consent before your first scan, never sell face data, and destroy it on the schedule in section 4, within one year after the purpose ends. Under the Texas Data Privacy and Security Act you also have the rights in section 7.5.</p>
+  </section>
 
-  <h2>3. Third-party services</h2>
-  <p>We share the minimum data necessary with:</p>
-  <ul>
-    <li><strong>Google Gemini, Anthropic Claude, OpenAI</strong> — AI analysis providers.</li>
-    <li><strong>Supabase</strong> — our backend database and authentication provider.</li>
-    <li><strong>PostHog</strong> — product analytics.</li>
-    <li><strong>Sentry</strong> — crash reporting.</li>
-    <li><strong>Apple (iOS) / Google (Android)</strong> — app distribution and in-app purchases.</li>
-  </ul>
-  <p>These services are bound by their own privacy policies and may store data in the US or EU.</p>
+  <section id="health-data">
+    <h2>7.4 Consumer health data (Washington, Nevada and Connecticut)</h2>
+    <p>Vela is a cosmetic app, not a health service, and we do not collect medical records. Some state laws, like Washington’s My Health My Data Act, define consumer health data broadly and can include biometric data or information about how your body looks. To be careful, we treat face data, skin appearance results and anything you tell Ask about your skin as consumer health data.</p>
+    <p>We collect it only with your consent, use it only to provide the features you ask for, share it only with the providers in section 3.1 with your consent, never sell it, and do not use geofencing. You can ask us to confirm whether we hold it, get a copy with the list of third parties that received it, withdraw your consent and delete it by emailing <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>. This section is our Consumer Health Data Privacy Policy.</p>
+  </section>
 
-  <h2>4. Data retention</h2>
-  <p>We retain your data for as long as your account is active. When you delete your
-  account, we delete your profile, scans, wardrobe items, and chat history within 30 days.
-  Anonymous analytics and crash reports may be retained longer in aggregated form.</p>
+  <section id="other-states">
+    <h2>7.5 Other states</h2>
+    <p>If you live in a state with a comprehensive privacy law, such as Colorado, Connecticut, Virginia, Oregon, Texas or Utah, you can access, correct, delete and get a copy of your data, and opt out of sale, targeted advertising and profiling that has legal or similarly significant effects. We do none of those three. We process sensitive data only with your consent. For Colorado residents, section 4 is also our biometric identifier policy.</p>
+    <p>If we decline your request, reply with “Appeal” in the subject within 45 days. We will answer within 45 days (60 in some states), and if you still disagree you can contact your state Attorney General.</p>
+  </section>
 
-  <h2>5. Your rights</h2>
-  <p>Depending on where you live, you may have rights under laws such as the CCPA (California),
-  GDPR (EU), or PIPEDA (Canada), including the right to access, correct, delete, or export
-  your personal data, and to opt out of certain data uses. Contact us at
-  <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a> to exercise these rights.</p>
+  <section id="canada">
+    <h2>8. Canada</h2>
+    <p><strong>Everywhere in Canada (PIPEDA).</strong> You can access and correct your information and challenge how we handle it. Our Privacy Officer is reachable at <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>, and you can also complain to the Office of the Privacy Commissioner of Canada.</p>
+    <p><strong>Quebec (Law 25).</strong> The person in charge of the protection of personal information at Vela is our Privacy Officer (<a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>). We ask for your express consent before processing face data, which is sensitive. Your data is stored and processed outside Quebec: in the United States (Supabase, Google Gemini, RevenueCat, PostHog, Sentry) and in Ontario (Vela Face Engine).</p>
+    <p>You can access and correct your data, get it in a structured, commonly used format (Account, then Export my data), withdraw consent and ask us to stop sharing it. Your colour season and skin results are produced automatically: you can ask which information and main factors led to a result, and send your comments to a person at <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>. You can also complain to the Commission d’accès à l’information du Québec.</p>
+  </section>
 
-  <h2>6. Children</h2>
-  <p>Vela is not intended for children under 13. We do not knowingly collect data from
-  children under 13. If you believe a child has provided us data, contact us and we will
-  delete it.</p>
+  <section id="age">
+    <h2>9. Age limit</h2>
+    <p>Vela is for people 18 and older. It is not directed to children, and we do not knowingly collect data from anyone under 18. If we learn that someone under 18 has used Vela, we delete their data. Please never scan anyone else, and never a child. If you think a child has used Vela, email <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>.</p>
+  </section>
 
-  <h2>7. Security</h2>
-  <p>We use industry-standard encryption (TLS in transit, AES at rest) and access
-  controls. No system is perfectly secure; please use a strong password and keep your
-  device updated.</p>
+  <section id="security">
+    <h2>10. Security</h2>
+    <p>We use encryption in transit and at rest, database rules so each account can only reach its own records, private storage with short-lived links, and server keys limited to what each service needs. No system is perfect: if a breach affects you, we will tell you and the authorities as the law requires.</p>
+  </section>
 
-  <h2>8. Changes to this policy</h2>
-  <p>We may update this policy periodically. Material changes will be announced in-app
-  or by email. Continued use of the App after changes take effect constitutes acceptance.</p>
+  <section id="transfers">
+    <h2>11. Where your data is processed</h2>
+    <p>In the United States and Canada, with the providers listed in section 3.1. Each of them is bound by contract to protect it.</p>
+  </section>
 
-  <h2>9. Contact</h2>
-  <p>Questions? Email us at <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a>.</p>
-</div>
-<footer>© 2026 Vela · <a href="/" style="color:inherit; text-decoration: underline;">Home</a> · <a href="/terms.html" style="color:inherit; text-decoration: underline;">Terms</a></footer>
+  <section id="changes">
+    <h2>12. Changes to this policy</h2>
+    <p>We will post updates here and in the app, and change the date above. If we change how face data is used or who receives it, we will ask for your consent again in the app before the change applies to you.</p>
+  </section>
+
+  <section id="contact">
+    <h2>13. Contact us</h2>
+    <ul>
+      <li>Company: 650 Vela Inc.</li>
+      <li>Privacy Officer: <a href="mailto:privacy@velastyle.app">privacy@velastyle.app</a></li>
+      <li>Support: <a href="mailto:support@velastyle.app">support@velastyle.app</a></li>
+    </ul>
+    <p>Please put “Privacy request” in the subject line so we can find it quickly.</p>
+  </section>
+</main>
+<footer>&copy; 2026 Vela &middot; <a href="/">Home</a> &middot; <a href="/terms.html">Terms of Use</a> &middot; <a href="/privacy.html#health-data">Consumer health data</a></footer>
 </body>
 </html>
