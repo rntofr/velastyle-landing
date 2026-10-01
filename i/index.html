@@ -1,0 +1,86 @@
+<!doctype html>
+<!--
+  velastyle.app/i/?c=CODE: a friend's invite (app: lib/referrals.ts, server:
+  functions/referral). Shows the code, copies it, then opens the App Store;
+  the app's "Have an invite code?" field has a Paste button. Self-contained,
+  no tracking, not indexed. US spelling, same palette as the app.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>You're invited to Vela</title>
+<meta name="apple-itunes-app" content="app-id=6762179147" />
+<link rel="icon" href="/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --primary:#5E7C6B; --tint:#EEF3EF; --ink:#111418; --ink2:#5B636B; --line:#E5E7EA; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Manrope, -apple-system, system-ui, sans-serif; color:var(--ink); background:#fff; }
+  main { max-width:440px; margin:0 auto; padding:48px 24px 40px; display:flex; flex-direction:column; gap:20px; }
+  .brand { display:flex; align-items:center; gap:8px; font-weight:600; font-size:22px; }
+  .dot { width:10px; height:10px; border-radius:50%; background:var(--primary); }
+  h1 { font-size:34px; line-height:1.1; letter-spacing:-0.8px; margin:16px 0 0; font-weight:600; }
+  p { color:var(--ink2); font-size:17px; line-height:1.5; margin:0; }
+  .code { background:var(--tint); border-radius:14px; padding:20px; text-align:center; }
+  .code small { display:block; color:var(--primary); font-weight:500; font-size:14px; }
+  .code strong { display:block; font-size:40px; letter-spacing:8px; font-weight:600; margin-top:6px; }
+  .btn { display:block; width:100%; text-align:center; text-decoration:none; border:0; cursor:pointer;
+         font:600 17px Manrope, system-ui, sans-serif; padding:16px; border-radius:12px; }
+  .btn-primary { background:var(--ink); color:#fff; }
+  .btn-ghost { background:#fff; color:var(--ink); border:1px solid var(--line); }
+  ol { color:var(--ink2); font-size:15px; line-height:1.6; padding-left:20px; margin:0; }
+  .note { font-size:13px; color:var(--ink2); }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><span class="dot"></span>vela</div>
+  <h1>A friend invited you to find your color season</h1>
+  <p>One selfie, about a minute: your season out of 12, your palette draped on your own face, and the shades to skip.</p>
+
+  <div class="code" id="codeBox" hidden>
+    <small>Your friend's invite code</small>
+    <strong id="code"></strong>
+  </div>
+
+  <button class="btn btn-primary" id="go">Copy code and get Vela</button>
+  <a class="btn btn-ghost" id="store" href="https://apps.apple.com/app/id6762179147">Open the App Store</a>
+
+  <ol id="steps" hidden>
+    <li>Install Vela and open it.</li>
+    <li>Tap <strong>Have an invite code?</strong> and paste the code.</li>
+    <li>Take your free face scan.</li>
+  </ol>
+  <p class="note">Vela is for adults 18+ in the United States and Canada. <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
+</main>
+<script>
+  (function () {
+    var STORE = 'https://apps.apple.com/app/id6762179147';
+    var raw = new URLSearchParams(location.search).get('c') || location.hash.replace('#', '');
+    var code = (raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    var valid = /^[A-HJ-NP-Z2-9]{6}$/.test(code);
+    var btn = document.getElementById('go');
+    if (valid) {
+      document.getElementById('code').textContent = code;
+      document.getElementById('codeBox').hidden = false;
+      document.getElementById('steps').hidden = false;
+    } else {
+      btn.textContent = 'Get Vela';
+    }
+    btn.addEventListener('click', function () {
+      var open = function () { location.href = STORE; };
+      if (valid && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(open, open);
+      } else {
+        open();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
