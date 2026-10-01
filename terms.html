@@ -18,10 +18,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --primary:#7E525C; --bg:#FBFAF7; --onBg:#1B1C1B; --onBgVariant:#504444; --outline:#D4C2C2; --primFixed:#FFD9DF; }
+  :root { --primary:#5E7C6B; --bg:#FFFFFF; --onBg:#111418; --onBgVariant:#5B636B; --outline:#E5E7EA; --primFixed:#EEF3EF; }
   *, *::before, *::after { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--onBg); font-family: 'Manrope', system-ui, sans-serif; font-weight: 300; line-height: 1.7; }
-  .brand { font-family: 'Noto Serif', serif; font-style: italic; font-size: 24px; color: var(--onBg); text-decoration: none; }
+  .brand { display: inline-flex; align-items: center; gap: 8px; font-family: 'Manrope', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.3px; color: var(--onBg); text-decoration: none; }
+  .brand::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--primary, #5E7C6B); }
   nav { padding: 20px 24px; border-bottom: 1px solid var(--outline); background: var(--bg); }
   .nav-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
   nav a { color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 500; }
